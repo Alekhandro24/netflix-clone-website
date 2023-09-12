@@ -6,11 +6,26 @@ import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { Container } from "./Netflix.styled";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchMovies, getGenres } from "../../redux/thunk";
+import { selectGenres, selectMovies } from "../../redux/selectors";
+import Slider from "../../component/Slider/Slider";
 
 const Netflix = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-
+  const genresLoaded = useSelector(selectGenres);
+  const movies = useSelector(selectMovies);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(getGenres());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (genresLoaded) dispatch(fetchMovies({ type: "all" }));
+  }, [dispatch, genresLoaded]);
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
@@ -43,6 +58,7 @@ const Netflix = () => {
           </div>
         </div>
       </div>
+      <Slider movies={movies} />
     </Container>
   );
 };
