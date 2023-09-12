@@ -1,19 +1,25 @@
-import {
-  configureStore,
-  createAsyncThunk,
-  createSlice,
-} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchMovies, getGenres } from "./thunk";
 
 const initialState = {
   movies: [],
-  genresloaded: false,
+  genresLoaded: false,
   genres: [],
 };
 
 const NetflixSlice = createSlice({
   name: "Netflix",
   initialState,
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getGenres.fulfilled, (state, action) => {
+        state.genres = action.payload;
+        state.genresLoaded = true;
+      })
+      .addCase(fetchMovies.fulfilled, (state, action) => {
+        state.movies = action.payload;
+      });
+  },
 });
 
 export const netflixReducer = NetflixSlice.reducer;
