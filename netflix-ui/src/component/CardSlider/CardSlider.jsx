@@ -8,7 +8,18 @@ const CardSlider = ({ data, title }) => {
   const [sliderPosition, setSliderPosition] = useState(0);
   const listRef = useRef();
 
-  const handleDirection = (direction) => {};
+  const handleDirection = (direction) => {
+    let distance = listRef.current.getBoundingClientRect().x - 70;
+
+    if (direction === "left" && sliderPosition > 0) {
+      listRef.current.style.transform = `translateX(${230 + distance}px)`;
+      setSliderPosition(sliderPosition - 1);
+    }
+    if (direction === "right" && sliderPosition < 4) {
+      listRef.current.style.transform = `translateX(${-230 + distance}px)`;
+      setSliderPosition(sliderPosition + 1);
+    }
+  };
 
   return (
     <Container
