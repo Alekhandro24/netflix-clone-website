@@ -9,12 +9,12 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchMovies, getGenres } from "../../redux/thunk";
-import { selectGenres, selectMovies } from "../../redux/selectors";
+import { selectGenresLoaded, selectMovies } from "../../redux/selectors";
 import Slider from "../../component/Slider/Slider";
 
 const Netflix = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const genresLoaded = useSelector(selectGenres);
+  const genresLoaded = useSelector(selectGenresLoaded);
   const movies = useSelector(selectMovies);
   const dispatch = useDispatch();
   const navigate = useNavigate();
