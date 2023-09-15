@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { TMBD_BASE_URL, API_KEY } from "../utils/constants";
 import axios from "axios";
 
-export const getGenres = createAsyncThunk("netflix/genres", async () => {
+export const getGenres = createAsyncThunk("netflix/getAllGenres", async () => {
   try {
     const {
       data: { genres },
@@ -20,18 +20,17 @@ const createArrayFromRawData = async (array, moviesArray, genres) => {
       const name = genres.find(({ id }) => id === genre);
       if (name) movieGenres.push(name.name);
     });
-    if (movie.backdrop_path) {
+    if (movie.backdrop_path)
       moviesArray.push({
         id: movie.id,
         name: movie?.original_name ? movie.original_name : movie.original_title,
         image: movie.backdrop_path,
         genres: movieGenres.slice(0, 3),
       });
-    }
   });
 };
 
-const getRawData = async (api, genres, paging) => {
+const getRawData = async (api, genres, paging = false) => {
   const moviesArray = [];
   for (let i = 1; moviesArray.length < 60 && i < 10; i++) {
     const {
@@ -44,18 +43,27 @@ const getRawData = async (api, genres, paging) => {
 
 export const fetchMovies = createAsyncThunk(
   "netflix/trending",
-  async ({ type }, thunkApi) => {
-    try {
-      const {
-        netflix: { genres },
-      } = thunkApi.getState();
-      return getRawData(
-        `${TMBD_BASE_URL}/trending/${type}/week?api_key=${API_KEY}`,
-        genres,
-        true
-      );
-    } catch (error) {
-      console.log(error);
-    }
+  async ({ type }, thunkAPI) => {
+    const {
+      netflix: { genres },
+    } = thunkAPI.getState();
+    return getRawData(
+      `${TMBD_BASE_URL}/trending/${type}/week?api_key=${API_KEY}`,
+      genres,
+      true
+    );
+  }
+);
+
+export const fetchDataByGenre = createAsyncThunk(
+  "netflix/moviesByGenres",
+  async ({ genre, type }, thunkAPI) => {
+    const {
+      netflix: { genres },
+    } = thunkAPI.getState();
+    return getRawData(
+      `${TMBD_BASE_URL}/discover/${type}?api_key=${API_KEY}&with_genres=${genre}`,
+      genres
+    );
   }
 );
