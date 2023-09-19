@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchDataByGenre, fetchMovies, getGenres } from "./thunk";
+import {
+  fetchDataByGenre,
+  fetchMovies,
+  getGenres,
+  getUserLikedMovies,
+  removeFromLikedMovies,
+} from "./thunk";
 
 const initialState = {
   movies: [],
@@ -20,6 +26,12 @@ const NetflixSlice = createSlice({
         state.movies = action.payload;
       })
       .addCase(fetchDataByGenre.fulfilled, (state, action) => {
+        state.movies = action.payload;
+      })
+      .addCase(getUserLikedMovies.fulfilled, (state, action) => {
+        state.movies = action.payload;
+      })
+      .addCase(removeFromLikedMovies.fulfilled, (state, action) => {
         state.movies = action.payload;
       });
   },
