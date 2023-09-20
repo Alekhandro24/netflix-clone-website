@@ -1,21 +1,21 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  .scroll {
+  .scrolled {
     background-color: black;
   }
   nav {
     position: sticky;
     top: 0;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    position: fixed;
     height: 6.5rem;
+    width: 100%;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
     z-index: 2;
     padding: 0 4rem;
+    align-items: center;
     transition: 0.3s ease-in-out;
-
     .left {
       gap: 2rem;
       .brand {
@@ -26,7 +26,6 @@ export const Container = styled.div`
       .links {
         list-style-type: none;
         gap: 2rem;
-
         li {
           a {
             color: white;
@@ -35,41 +34,38 @@ export const Container = styled.div`
         }
       }
     }
-
     .right {
       gap: 1rem;
-
       button {
         background-color: transparent;
         border: none;
         cursor: pointer;
-
         &:focus {
           outline: none;
         }
-
         svg {
-          color: #f24242;
+          color: #f34242;
           font-size: 1.2rem;
         }
       }
-
       .search {
         display: flex;
-        justify-content: center;
-        align-items: center;
         gap: 0.4rem;
+        align-items: center;
+        justify-content: center;
         padding: 0.2rem;
         padding-left: 0.5rem;
-
         button {
           background-color: transparent;
-
+          border: none;
+          &:focus {
+            outline: none;
+          }
           svg {
             color: white;
+            font-size: 1.2rem;
           }
         }
-
         input {
           width: 0;
           opacity: 0;
@@ -78,17 +74,14 @@ export const Container = styled.div`
           background-color: transparent;
           border: none;
           color: white;
-
           &:focus {
             outline: none;
           }
         }
       }
-
       .show-search {
         border: 1px solid white;
         background-color: rgba(0, 0, 0, 0.6);
-
         input {
           width: 100%;
           opacity: 1;
