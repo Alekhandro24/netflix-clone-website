@@ -16,6 +16,8 @@ import NotAvailable from "../../component/NotAvailable/NotAvailable";
 import SelectGenre from "../../component/SelectGenre/SelectGenre";
 const Movies = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [user, setUser] = useState(undefined);
+
   const genresLoaded = useSelector(selectGenresLoaded);
   const movies = useSelector(selectMovies);
   const genres = useSelector(selectGenres);
@@ -37,8 +39,13 @@ const Movies = () => {
   };
 
   onAuthStateChanged(firebaseAuth, (currentUser) => {
-    // if (currentUser) navigate("/");
+    if (currentUser) setUser(currentUser.uid);
+    else navigate("/login");
   });
+
+  // onAuthStateChanged(firebaseAuth, (currentUser) => {
+  //   // if (currentUser) navigate("/");
+  // });
 
   return (
     <Container>
