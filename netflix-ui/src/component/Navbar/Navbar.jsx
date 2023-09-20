@@ -18,13 +18,13 @@ const Navbar = ({ isScrolled }) => {
     { name: "My List", link: "/mylist" },
   ];
 
-  onAuthStateChanged(firebaseAuth, (currentUser) => {
-    if (!currentUser) navigate("/login");
-  });
+  // onAuthStateChanged(firebaseAuth, (currentUser) => {
+  //   if (!currentUser) navigate("/login");
+  // });
 
   return (
     <Container>
-      <nav className={`flex ${isScrolled ? "scroll" : ""}`}>
+      <nav className={`${isScrolled ? "scrolled" : ""} flex `}>
         <div className="left flex a-center">
           <div className="brand flex a-center j-center">
             <img src={logo} alt="logo" />
