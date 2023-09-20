@@ -17,20 +17,22 @@ import SelectGenre from "../../component/SelectGenre/SelectGenre";
 
 const TVShows = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [user, setUser] = useState(undefined);
   const genresLoaded = useSelector(selectGenresLoaded);
   const movies = useSelector(selectMovies);
   const genres = useSelector(selectGenres);
+  //  const dataLoading = useSelector((state) => state.netflix.dataLoading);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getGenres());
-  }, [dispatch]);
+    if (!genres.length) dispatch(getGenres());
+  }, [dispatch, genres.length]);
 
   useEffect(() => {
-    if (genresLoaded) dispatch(fetchMovies({ type: "tv" }));
-  }, [dispatch, genresLoaded]);
+    if (genresLoaded) dispatch(fetchMovies({ genres, type: "tv" }));
+  }, [dispatch, genresLoaded, genres]);
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
@@ -38,7 +40,8 @@ const TVShows = () => {
   };
 
   onAuthStateChanged(firebaseAuth, (currentUser) => {
-    // if (currentUser) navigate("/");
+    if (currentUser) setUser(currentUser.uid);
+    else navigate("/login");
   });
 
   return (
