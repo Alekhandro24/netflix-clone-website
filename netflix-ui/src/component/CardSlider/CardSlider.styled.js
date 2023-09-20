@@ -1,32 +1,28 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  position: relative;
   gap: 1rem;
+  position: relative;
   padding: 2rem 0;
-
   h1 {
     margin-left: 50px;
   }
-
   .wrapper {
     .slider {
       width: max-content;
       gap: 1rem;
-      margin-left: 50px;
       transform: translateX(0px);
       transition: 0.3s ease-in-out;
+      margin-left: 50px;
     }
-
     .slider-action {
       position: absolute;
+      z-index: 99;
+      height: 100%;
       top: 0;
       bottom: 0;
       width: 50px;
-      height: 100%;
       transition: 0.3s ease-in-out;
-      z-index: 99;
-
       svg {
         font-size: 2rem;
       }
