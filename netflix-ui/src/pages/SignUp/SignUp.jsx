@@ -15,13 +15,16 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+
   const navigate = useNavigate();
 
   const handleSignIn = async () => {
     try {
       const { email, password } = formValues;
       await createUserWithEmailAndPassword(firebaseAuth, email, password);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   onAuthStateChanged(firebaseAuth, (currentUser) => {
@@ -74,7 +77,7 @@ const SignUp = () => {
               <button onClick={() => setShowPassword(true)}>Get Started</button>
             )}
           </div>
-          <button onClick={handleSignIn}>Sign Up</button>
+          {showPassword && <button onClick={handleSignIn}>Log In</button>}
         </div>
       </div>
     </Container>
