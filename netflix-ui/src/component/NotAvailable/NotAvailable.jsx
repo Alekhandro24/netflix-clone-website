@@ -2,7 +2,9 @@ import React from "react";
 
 const NotAvailable = () => {
   return (
-    <h1 className="not-available">No Movies avaialable for selected genre</h1>
+    <h1 className="not-available">
+      No Movies avaialable for selected genre. Please select a different genre.
+    </h1>
   );
 };
 
