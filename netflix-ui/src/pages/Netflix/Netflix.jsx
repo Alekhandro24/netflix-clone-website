@@ -9,13 +9,20 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchMovies, getGenres } from "../../redux/thunk";
-import { selectGenresLoaded, selectMovies } from "../../redux/selectors";
+import {
+  selectGenresLoaded,
+  selectMovies,
+  selectGenres,
+} from "../../redux/selectors";
 import Slider from "../../component/Slider/Slider";
 
 const Netflix = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+
   const genresLoaded = useSelector(selectGenresLoaded);
   const movies = useSelector(selectMovies);
+  const genres = useSelector(selectGenres);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,8 +31,8 @@ const Netflix = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (genresLoaded) dispatch(fetchMovies({ type: "all" }));
-  }, [dispatch, genresLoaded]);
+    if (genresLoaded) dispatch(fetchMovies({ genres, type: "all" }));
+  }, [dispatch, genresLoaded, genres]);
 
   window.onscroll = () => {
     setIsScrolled(window.pageYOffset === 0 ? false : true);
