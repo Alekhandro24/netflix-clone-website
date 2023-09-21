@@ -15,6 +15,7 @@ const UserListedMovies = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const movies = useSelector(selectMovies);
+  console.log("movies", movies);
 
   onAuthStateChanged(firebaseAuth, (currentUser) => {
     if (currentUser) setEmail(currentUser.email);
@@ -36,22 +37,34 @@ const UserListedMovies = () => {
     <Container>
       <Navbar isScrolled={isScrolled} />
       <div className="content flex column">
-        <h1>My List</h1>
-        <div className="grid flex">
-          {movies.map((movie, index) => {
-            return (
-              <Card
-                movieData={movie}
-                index={index}
-                key={movie.id}
-                isLiked={true}
-              />
-            );
-          })}
-        </div>
+        {!movies ? (
+          <h1>My List</h1>
+        ) : (
+          <>
+            <h1>My List</h1>
+            <div className="grid flex">
+              {movies.map((movie, index) => {
+                return (
+                  <Card
+                    movieData={movie}
+                    index={index}
+                    key={movie.id}
+                    isLiked={true}
+                  />
+                );
+              })}
+            </div>
+          </>
+        )}
       </div>
     </Container>
   );
 };
 
 export default UserListedMovies;
+
+// {
+//   movies.length ? <Slider movies={movies} /> : <NotAvailable />;
+// }
+
+// (<h3>There isn't movies on the list</h3>)
