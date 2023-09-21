@@ -7,6 +7,7 @@ import Player from "./pages/Player/Player";
 import Movies from "./pages/Movies/Movies";
 import TVShows from "./pages/TVShows/TVShows";
 import UserListedMovies from "./pages/UserListedMovies/UserListedMovies";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route exact path="/mylist" element={<UserListedMovies />} />
         <Route exact path="/" element={<Netflix />} />
       </Routes>
+      <Toaster autoClose={3000} />
     </>
   );
 };
