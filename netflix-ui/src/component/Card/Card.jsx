@@ -5,13 +5,14 @@ import { Container } from "./Card.styled";
 import video from "../../assets/beachVid.mp4";
 import { IoPlayCircleSharp } from "react-icons/io5";
 import { RiThumbUpFill, RiThumbDownFill } from "react-icons/ri";
-import { BsCheck } from "react-icons/bs";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BiChevronDown } from "react-icons/bi";
+import { BsTrash } from "react-icons/bs";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../../utils/firebase-config";
 import { useDispatch } from "react-redux";
 import { removeFromLikedMovies } from "../../redux/thunk";
+import toast from "react-hot-toast";
 
 const Card = ({ movieData, isLiked = false }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -34,6 +35,7 @@ const Card = ({ movieData, isLiked = false }) => {
         email,
         data: movieData,
       });
+      toast.success(`${movieData.name} successfully added!`);
     } catch (error) {
       console.log(error);
     }
@@ -79,11 +81,16 @@ const Card = ({ movieData, isLiked = false }) => {
                 <RiThumbUpFill title="Like" />
                 <RiThumbDownFill title="Dislike" />
                 {isLiked ? (
-                  <BsCheck
+                  <BsTrash
                     title="Remove from List"
                     onClick={() =>
                       dispatch(
-                        removeFromLikedMovies({ movieId: movieData.id, email })
+                        removeFromLikedMovies(
+                          { movieId: movieData.id, email },
+                          toast.success(
+                            `${movieData.name} successfully remove from List!`
+                          )
+                        )
                       )
                     }
                   />
