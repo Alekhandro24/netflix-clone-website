@@ -8,6 +8,7 @@ import BackgroundImage from "../../component/Background/BackgroundImage";
 import Header from "../../component/Header/Header";
 import { firebaseAuth } from "../../utils/firebase-config";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,9 +23,12 @@ const SignUp = () => {
     try {
       const { email, password } = formValues;
       await createUserWithEmailAndPassword(firebaseAuth, email, password);
+      toast.success("User successfuly added");
     } catch (error) {
-      console.log(error);
+      toast.error(`${error.code}`);
     }
+    setFormValues("");
+    setShowPassword("");
   };
 
   onAuthStateChanged(firebaseAuth, (currentUser) => {
