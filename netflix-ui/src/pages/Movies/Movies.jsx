@@ -54,7 +54,7 @@ const Movies = () => {
       </div>
       <div className="data">
         <SelectGenre genres={genres} type="movie" />
-        {movies.length ? <Slider movies={movies} /> : <NotAvailable />}
+        {movies ? <Slider movies={movies} /> : <NotAvailable />}
       </div>
     </Container>
   );
