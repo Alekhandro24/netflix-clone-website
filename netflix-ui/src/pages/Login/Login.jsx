@@ -5,6 +5,7 @@ import BackgroundImage from "../../component/Background/BackgroundImage";
 import Header from "../../component/Header/Header";
 import { firebaseAuth } from "../../utils/firebase-config";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,9 +15,12 @@ const Login = () => {
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(firebaseAuth, email, password);
+      toast.success("Login success");
     } catch (error) {
-      console.log(error.code);
+      toast.error(`${error.code}`);
     }
+    setEmail("");
+    setPassword("");
   };
 
   onAuthStateChanged(firebaseAuth, (currentUser) => {
