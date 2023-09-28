@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Container } from "./Card.styled";
-import video from "../../assets/beachVid.mp4";
+// import video from "../../assets/beachVid.mp4";
 import { IoPlayCircleSharp } from "react-icons/io5";
 import { RiThumbUpFill, RiThumbDownFill } from "react-icons/ri";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 import { removeFromLikedMovies } from "../../redux/thunk";
 import toast from "react-hot-toast";
 
-const Card = ({ movieData, isLiked = false }) => {
+const Card = ({ movieData, isLiked = false, handleClick }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [email, setEmail] = useState(undefined);
 
@@ -49,7 +49,7 @@ const Card = ({ movieData, isLiked = false }) => {
       <img
         src={`https://image.tmdb.org/t/p/w500${movieData.image}`}
         alt="card"
-        onClick={() => navigate("/player")}
+        // onClick={() => navigate("/player")}
       />
 
       {isHovered && (
@@ -58,25 +58,16 @@ const Card = ({ movieData, isLiked = false }) => {
             <img
               src={`https://image.tmdb.org/t/p/w500${movieData.image}`}
               alt="card"
-              onClick={() => navigate("/player")}
-            />
-            <video
-              src={video}
-              autoPlay={true}
-              loop
-              muted
-              onClick={() => navigate("/player")}
+              // onClick={handleClick(movieData)}
             />
           </div>
           <div className="info-container flex column">
-            <h3 className="name" onClick={() => navigate("/player")}>
-              {movieData.name}
-            </h3>
+            <h3 className="name">{movieData.name}</h3>
             <div className="icons flex j-between">
               <div className="controls flex">
                 <IoPlayCircleSharp
                   title="Play"
-                  onClick={() => navigate("/player")}
+                  onClick={handleClick(movieData)}
                 />
                 <RiThumbUpFill title="Like" />
                 <RiThumbDownFill title="Dislike" />
@@ -117,3 +108,66 @@ const Card = ({ movieData, isLiked = false }) => {
 };
 
 export default Card;
+
+// {
+//   isHovered && (
+//     <div className="hover">
+//       <div className="image-video-container">
+//         <img
+//           src={`https://image.tmdb.org/t/p/w500${movieData.image}`}
+//           alt="card"
+//           onClick={() => navigate("/player")}
+//         />
+//         <video
+//           src={video}
+//           autoPlay={true}
+//           loop
+//           muted
+//           onClick={() => navigate("/player")}
+//         />
+//       </div>
+//       <div className="info-container flex column">
+//         <h3 className="name" onClick={() => navigate("/player")}>
+//           {movieData.name}
+//         </h3>
+//         <div className="icons flex j-between">
+//           <div className="controls flex">
+//             <IoPlayCircleSharp
+//               title="Play"
+//               onClick={() => navigate("/player")}
+//             />
+//             <RiThumbUpFill title="Like" />
+//             <RiThumbDownFill title="Dislike" />
+//             {isLiked ? (
+//               <BsTrash
+//                 title="Remove from List"
+//                 onClick={() =>
+//                   dispatch(
+//                     removeFromLikedMovies(
+//                       { movieId: movieData.id, email },
+//                       toast.success(
+//                         `${movieData.name} successfully remove from List!`
+//                       )
+//                     )
+//                   )
+//                 }
+//               />
+//             ) : (
+//               <AiOutlinePlus title="Add to my list" onClick={addToList} />
+//             )}
+//           </div>
+//           <div className="info">
+//             <BiChevronDown title="More Info" />
+//           </div>
+//         </div>
+//         <div className="genres flex">
+//           <ul className="flex">
+//             {movieData.genres.map((genre) => (
+//               <li key={genre}>{genre}</li>
+//             ))}
+//           </ul>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
