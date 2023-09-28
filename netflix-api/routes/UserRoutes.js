@@ -2,7 +2,7 @@ const {
   addToLikedMovies,
   getLikedMovies,
   removeFromLikedMovies,
-} = require("../controllers/UserController");
+} = require("../controllers/UserControllers");
 
 const router = require("express").Router();
 
