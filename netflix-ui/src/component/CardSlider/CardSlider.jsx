@@ -2,10 +2,13 @@ import React, { useRef, useState } from "react";
 import Card from "../Card/Card";
 import { Container } from "./CardSlider.styled";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import YouTube from "react-youtube";
+import movieTrailer from "movie-trailer";
 
 const CardSlider = ({ data, title }) => {
   const [sliderPosition, setSliderPosition] = useState(0);
   const [showControls, setShowControls] = useState(false);
+  const [trailerUrl, setTrailerUrl] = useState("");
   const listRef = useRef();
 
   const handleDirection = (direction) => {
@@ -17,6 +20,27 @@ const CardSlider = ({ data, title }) => {
     if (direction === "right" && sliderPosition < 4) {
       listRef.current.style.transform = `translateX(${-230 + distance}px)`;
       setSliderPosition(sliderPosition + 1);
+    }
+  };
+
+  const opts = {
+    height: "390",
+    width: "100%",
+    playerVars: {
+      autoplay: 0,
+    },
+  };
+
+  const handleClick = (movieData) => {
+    if (trailerUrl) {
+      setTrailerUrl("");
+    } else {
+      movieTrailer(movieData?.name || "")
+        .then((url) => {
+          const urlParams = new URLSearchParams(new URL(url).search);
+          setTrailerUrl(urlParams.get("v"));
+        })
+        .catch((error) => console.log(error));
     }
   };
 
@@ -38,7 +62,14 @@ const CardSlider = ({ data, title }) => {
         </div>
         <div className="slider flex" ref={listRef}>
           {data.map((movie, index) => {
-            return <Card movieData={movie} index={index} key={movie.id} />;
+            return (
+              <Card
+                movieData={movie}
+                index={index}
+                key={movie.id}
+                handleClick={handleClick}
+              />
+            );
           })}
         </div>
         <div
@@ -49,6 +80,7 @@ const CardSlider = ({ data, title }) => {
           <AiOutlineRight onClick={() => handleDirection("right")} />
         </div>
       </div>
+      {trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
     </Container>
   );
 };
