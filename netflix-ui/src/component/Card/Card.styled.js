@@ -22,7 +22,8 @@ export const Container = styled.div`
     border-radius: 0.3rem;
     box-shadow: rgba(0, 0, 0, 0.75) 0px 3px 10px;
     background-color: #181818;
-    transition: 0.3s ease-in-out;
+    transition: 7.8s ease-in-out;
+
     .image-video-container {
       position: relative;
       height: 140px;
@@ -35,7 +36,7 @@ export const Container = styled.div`
         z-index: 4;
         position: absolute;
       }
-      video {
+      /* video {
         width: 100%;
         height: 140px;
         object-fit: cover;
@@ -43,7 +44,7 @@ export const Container = styled.div`
         top: 0;
         z-index: 5;
         position: absolute;
-      }
+      } */
     }
     .info-container {
       padding: 1rem;
