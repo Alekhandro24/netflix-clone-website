@@ -1,8 +1,25 @@
 import React, { useEffect, useState } from "react";
 // import CardSlider from "../CardSlider/CardSlider";
-import { Container, ContainerRow } from "./Slider.styled";
+import { Container, ContainerCard, ContainerRow } from "./Slider.styled";
 
 const base_url = "https://image.tmdb.org/t/p/w500";
+
+const Card = ({ movieData }) => {
+  return (
+    <div className="ContainerCard">
+      <img
+        className="row__poster"
+        src={`${base_url}${movieData.image}`}
+        alt={movieData.name}
+        key={movieData.id}
+      />
+      <div>
+        <p>jkdfjklsjdf</p>
+        <p>ytsde9r98r</p>
+      </div>
+    </div>
+  );
+};
 
 const Row = ({ title, data }) => {
   return (
@@ -11,12 +28,7 @@ const Row = ({ title, data }) => {
 
       <div className="row__posters">
         {data.map((movie) => (
-          <img
-            className="row__poster"
-            src={`${base_url}${movie.image}`}
-            alt={movie.name}
-            key={movie.id}
-          />
+          <Card movieData={movie} key={data.id} />
         ))}
       </div>
     </ContainerRow>
